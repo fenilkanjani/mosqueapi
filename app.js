@@ -35,7 +35,7 @@ app.get('/nearestmosques', function (req, res) {
         });
         googleIds = googleIds.join(',');
         googleIds = googleIds || '""';
-        connection.query('select * from mosques where google_id in ('+ googleIds +')', function(err, rows, fields) {
+        connection.query('select * from mosques where google_id in ('+ googleIds +');', function(err, rows, fields) {
             if (err) {
                 throw err;
             }
@@ -52,6 +52,31 @@ app.get('/nearestmosques', function (req, res) {
       }
     }
   );
+});
+
+app.post('/updatetimings', urlencodedParser, function (req, res) {
+  var googleId = req.body.google_id;
+  var timings = req.body.timings;
+  connection.query('update mosques set timings="' + timings + '" where google_id="' + googleId + '";', function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      res.setHeader('Content-Type', 'application/json');
+      if (!rows.affectedRows) {
+        connection.query('insert into mosques values (null,"' + googleId + '","' + timings + '");', function(err, rows, fields) {
+            if (err) {
+                throw err;
+            }
+            res.send(JSON.stringify({ 
+                message: 'Timings saved!!'
+            }));
+        });
+      } else {
+        res.send(JSON.stringify({ 
+            message: 'Timings updated!!'
+        }));
+      }
+  });
 });
 
 var server = app.listen(process.env.PORT || 3000, function () {
