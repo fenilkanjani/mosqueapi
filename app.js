@@ -29,8 +29,27 @@ app.get('/nearestmosques', function (req, res) {
       if (bodyjson) {
         results = bodyjson.results;
         results = results.splice(0,count);
+        var googleIds = [];
+        results.forEach(function (result) {
+          googleIds.push('"' + result.id + '"');
+        });
+        googleIds = googleIds.join(',');
+        googleIds = googleIds || '""';
+        connection.query('select * from mosques where google_id in ('+ googleIds +')', function(err, rows, fields) {
+            if (err) {
+                throw err;
+            }
+            results.forEach(function (currentResult) {
+              rows.some(function (currentRow) {
+                if (currentResult.id === currentRow.google_id) {
+                  currentResult.timings = currentRow.timings;
+                  return true;
+                }
+              });
+            });
+            res.send(JSON.stringify(results));
+        });
       }
-      res.send(JSON.stringify(results));
     }
   );
 });
