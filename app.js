@@ -42,7 +42,7 @@ app.get('/nearestmosques', function (req, res) {
             results.forEach(function (currentResult) {
               rows.some(function (currentRow) {
                 if (currentResult.id === currentRow.google_id) {
-                  currentResult.timings = currentRow.timings;
+                  currentResult.timings = JSON.parse(currentRow.timings);
                   return true;
                 }
               });
@@ -54,16 +54,24 @@ app.get('/nearestmosques', function (req, res) {
   );
 });
 
-app.post('/updatetimings', urlencodedParser, function (req, res) {
+app.post('/updatetimings', jsonParser, function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
   var googleId = req.body.google_id;
   var timings = req.body.timings;
-  connection.query('update mosques set timings="' + timings + '" where google_id="' + googleId + '";', function(err, rows, fields) {
+  if (googleId && timings && timings.length === 5) {
+    timings = JSON.stringify(timings);
+  } else {
+    res.send(JSON.stringify({ 
+        message: 'There seems to be an issue with the data that was posted'
+    }));
+    return;
+  }
+  connection.query('update mosques set timings=\'' + timings + '\' where google_id="' + googleId + '";', function(err, rows, fields) {
       if (err) {
           throw err;
       }
-      res.setHeader('Content-Type', 'application/json');
       if (!rows.affectedRows) {
-        connection.query('insert into mosques values (null,"' + googleId + '","' + timings + '");', function(err, rows, fields) {
+        connection.query('insert into mosques values (null,"' + googleId + '",\'' + timings + '\');', function(err, rows, fields) {
             if (err) {
                 throw err;
             }
@@ -104,7 +112,7 @@ app.get('/querysearch', function (req, res) {
             results.forEach(function (currentResult) {
               rows.some(function (currentRow) {
                 if (currentResult.id === currentRow.google_id) {
-                  currentResult.timings = currentRow.timings;
+                  currentResult.timings = JSON.parse(currentRow.timings);
                   return true;
                 }
               });
@@ -114,6 +122,25 @@ app.get('/querysearch', function (req, res) {
       }
     }
   );
+});
+
+app.get('/gettimings', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var googleId = req.query.google_id;
+  connection.query('select * from mosques where google_id="'+ googleId +'";', function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      if (rows.length) {
+        res.send(JSON.stringify({ 
+            timings: JSON.parse(rows[0].timings)
+        }));
+      } else {
+        res.send(JSON.stringify({ 
+            message: 'no entry'
+        }));
+      }
+  });
 });
 
 var server = app.listen(process.env.PORT || 3000, function () {
