@@ -15,6 +15,8 @@ var googleMapKey = 'AIzaSyAVDeI77bw_EErBIivLzOztZKMzKXjphdE';
 
 connection.connect();
 
+app.use('/', express.static('settimings'));
+
 app.get('/nearestmosques', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   var location = req.query.location;
