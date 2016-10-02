@@ -16,7 +16,8 @@
 		function ($scope, $http) {
 			$scope.areaList = [
 				'jayanagar',
-				'btm layout'
+				'btm layout',
+				'kodichikknahalli'
 			];
 
 			$scope.selectedArea = '';
