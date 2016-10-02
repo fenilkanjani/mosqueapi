@@ -45,7 +45,7 @@
 
 			$scope.getMosques = function () {
 				if ($scope.selectedArea) {
-					$http.get('/querysearch?query=mosques in ' + $scope.selectedArea + ',banglore')
+					$http.get('/querysearch?query=mosques in ' + $scope.selectedArea + ',bangalore')
 						.then(function (success) {
 							$scope.selectedMosque = '';
 							$scope.timings = '';
