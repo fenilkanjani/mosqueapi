@@ -17,7 +17,8 @@
 			$scope.areaList = [
 				'jayanagar',
 				'btm layout',
-				'kodichikknahalli'
+				'kodichikknahalli',
+				'Vasanth Nagar'
 			];
 
 			$scope.selectedArea = '';
