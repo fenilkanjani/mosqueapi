@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
   password : '',
   database: 'mosque_finder'
 });
-var googleMapKey = 'AIzaSyAVDeI77bw_EErBIivLzOztZKMzKXjphdE';
+var googleMapKey = 'AIzaSyBG0ylGK5baF3F5Slmnguk7mt3DiHg7hQM';
 
 connection.connect();
 
