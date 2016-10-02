@@ -76,6 +76,14 @@
                         {{time}}
                     </option>
                 </select>
+                <select class="time-selector"
+                    ng-model="timings[5]">
+                    <option value="">Select Time</option>
+                    <option 
+                        ng-repeat="time in timeList" value="{{time}}">
+                        {{time}}
+                    </option>
+                </select>
                 <button ng-click="updateTimings()" class="save-timing">Save timings</button>
             </div>
         </div> <!-- end #main -->

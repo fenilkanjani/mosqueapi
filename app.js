@@ -60,7 +60,7 @@ app.post('/updatetimings', jsonParser, function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   var googleId = req.body.google_id;
   var timings = req.body.timings;
-  if (googleId && timings && timings.length === 5) {
+  if (googleId && timings && timings.length === 6) {
     timings = JSON.stringify(timings);
   } else {
     res.send(JSON.stringify({ 

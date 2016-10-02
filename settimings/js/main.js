@@ -62,7 +62,7 @@
 				if ($scope.selectedMosque) {
 					$http.get('/gettimings?google_id=' + $scope.selectedMosque)
 						.then(function (success) {
-							$scope.timings = success.data.timings || ['', '', '', '', ''];
+							$scope.timings = success.data.timings || ['', '', '', '', '', ''];
 						}, function () {
 							alert('something went wrong while fetching timings');
 						});
