@@ -119,6 +119,9 @@ app.get('/querysearch', function (req, res) {
                 }
               });
             });
+            results = results.filter(function (result) {
+              return result.types.indexOf('mosque') !== -1 || result.types.indexOf('place_of_worship') !== -1;
+            });
             res.send(JSON.stringify(results));
         });
       }
