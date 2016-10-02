@@ -23,7 +23,7 @@ app.get('/nearestmosques', function (req, res) {
   var count = req.query.count || 3;
   request.get(
     {
-      url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=50000&type=mosque&key=' + googleMapKey + '&location=' + location
+      url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?rankby=distance&type=mosque&key=' + googleMapKey + '&location=' + location
     }, 
     function (err, response, body) {
       var bodyjson = JSON.parse(body);
