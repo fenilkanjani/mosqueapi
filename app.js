@@ -15,7 +15,11 @@ var googleMapKey = 'AIzaSyDMOKueFH2ZhO5aDIZes0Gsl14O4x6E17k';
 
 connection.connect();
 
-app.use('/', express.static('settimings'));
+app.use(express.static('settimings'));
+
+app.use('/areas', function (req, res) {
+  res.sendFile(__dirname + '/settimings/areas.html');
+});
 
 app.get('/nearestmosques', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
@@ -86,6 +90,50 @@ app.post('/updatetimings', jsonParser, function (req, res) {
             message: 'Timings updated!!'
         }));
       }
+  });
+});
+
+app.get('/getareas', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  connection.query('select * from areas;', function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      res.send(JSON.stringify({ 
+          areas: rows
+      }));
+  });
+});
+
+app.post('/setarea', jsonParser,function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var name = req.body.name || '';
+  var pincode = req.body.pincode || '';
+  var zone = req.body.zone || '';
+  connection.query('insert into areas values (null ,"' + name + '","' + pincode + '","' + zone + '")', function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      res.send(JSON.stringify({
+          message: 'successfully added'
+      }));
+  });
+});
+
+app.patch('/setarea/:areaId', jsonParser, function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var areaId = req.params.areaId;
+  var name = req.body.name || '';
+  var pincode = req.body.pincode || '';
+  var zone = req.body.zone || '';
+  console.log(req.params.areaId);
+  connection.query('update areas set name = "' + name + '",pincode = "' + pincode + '", zone = "' + zone + '" where id = ' + areaId, function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      res.send(JSON.stringify({ 
+          message: 'successfully updated'
+      }));
   });
 });
 

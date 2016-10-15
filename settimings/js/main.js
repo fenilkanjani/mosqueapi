@@ -1,7 +1,7 @@
 /*
  * mosquefinder
  * 
- * Author: Fenil Kanjani (2015)
+ * Author: Fenil Kanjani (2016)
  * @version 1.0
  */
 (function (angular) {
