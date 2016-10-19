@@ -10,3 +10,43 @@
 	height: 100%;
 	width: 100%; 
 }
+
+.area-headings {
+	margin-bottom: 40px;
+}
+
+.area {
+	margin-bottom: 10px;
+}
+
+.area button, .area-headings button {
+	padding: 5px;
+}
+
+.area-headings div, .area-show div, .area-edit-mode div {
+	display: inline-block;
+}
+
+.area-edit-mode input, .area-headings input {
+	width: 90%;
+}
+
+.area-name {
+	width: 35%;
+}
+
+.area-pincode{
+	width: 10%;
+}
+
+.area-zone {
+	width: 25%;
+}
+
+.area-edit {
+	width: 15%;
+}
+
+.area-delete {
+	width: 15%;
+}

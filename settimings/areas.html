@@ -20,7 +20,44 @@
     <body ng-app="areasApp">
         <div id="main" ng-controller="areasController">
             <div class="areas-curd-container">
-                
+                <div class="area-headings">
+                    <div class="area-name heading">Name</div><div class="area-pincode heading">PINCODE</div><div class="area-zone heading">ZONE</div><div class="area-edit heading"></div><div class="area-delete heading"></div>
+                </div>
+                <div>+ ADD NEW AREA</div>
+                <div class="area-headings">
+                    <div class="area-name">
+                        <input ng-model="newArea.name" class="area-name-input"/>
+                    </div><div class="area-pincode">
+                        <input ng-model="newArea.pincode" class="area-pincode-input"/>
+                    </div><div class="area-zone">
+                        <input ng-model="newArea.zone" class="area-zone-input"/>
+                    </div><div class="area-edit">
+                        <button ng-click="saveArea()">SAVE</button>
+                    </div><div class="area-delete">
+                        <button ng-click="clearNewArea()">CLEAR</button>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px">CURRENT AREA LIST</div>
+                <div class="area-list">
+                    <div ng-repeat="area in areas | orderBy:id:true" class="area">
+                        <div class="area-show"  ng-if="!area.editMode">
+                            <div class="area-name">{{area.name}}</div><div class="area-pincode">{{area.pincode}}</div><div class="area-zone">{{area.zone}}</div><div class="area-edit">
+                                <button ng-click="area.editMode = true">EDIT</button>
+                            </div><div class="area-delete">
+                                <button ng-click="deleteArea(area)">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="area-edit-mode" ng-if="area.editMode">
+                            <div class="area-name"><input ng-model="area.nameEdit" ng-init="area.nameEdit = area.name" class="area-name-input"/></div><div class="area-pincode">
+                            <input ng-model="area.pincodeEdit" ng-init="area.pincodeEdit = area.pincode" class="area-pincode-input"/></div><div class="area-zone">
+                            <input ng-model="area.zoneEdit" ng-init="area.zoneEdit = area.zone" class="area-zone-input"/></div><div class="area-edit">
+                                <button ng-click="saveEditedArea(area)">SAVE</button>
+                            </div><div class="area-delete">
+                                <button ng-click="area.editMode = false">CANCEL</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div> <!-- end #main -->
         <script src="js/areas.js"></script>

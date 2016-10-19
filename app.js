@@ -115,7 +115,13 @@ app.post('/setarea', jsonParser,function (req, res) {
           throw err;
       }
       res.send(JSON.stringify({
-          message: 'successfully added'
+          message: 'successfully added',
+          data: {
+            id: rows.insertId,
+            name: name,
+            pincode: pincode,
+            zone: zone
+          }
       }));
   });
 });
@@ -126,13 +132,25 @@ app.patch('/setarea/:areaId', jsonParser, function (req, res) {
   var name = req.body.name || '';
   var pincode = req.body.pincode || '';
   var zone = req.body.zone || '';
-  console.log(req.params.areaId);
   connection.query('update areas set name = "' + name + '",pincode = "' + pincode + '", zone = "' + zone + '" where id = ' + areaId, function(err, rows, fields) {
       if (err) {
           throw err;
       }
       res.send(JSON.stringify({ 
           message: 'successfully updated'
+      }));
+  });
+});
+
+app.delete('/deletearea/:areaId', jsonParser, function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var areaId = req.params.areaId;
+  connection.query('delete from areas where id = ' + areaId, function(err, rows, fields) {
+      if (err) {
+          throw err;
+      }
+      res.send(JSON.stringify({ 
+          message: 'successfully deleted'
       }));
   });
 });
