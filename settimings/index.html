@@ -23,8 +23,8 @@
                 ng-model="selectedArea">
                 <option value="">Select Area</option>
             	<option 
-                    ng-repeat="area in areaList" value="{{area}}">
-                    {{area}}
+                    ng-repeat="area in areaList" value="{{area.name}}">
+                    {{area.name}}
                 </option>
             </select>
             <select class="area-selector" ng-change="getTimings()"

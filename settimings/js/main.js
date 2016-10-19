@@ -14,12 +14,13 @@
 		'$scope',
 		'$http',
 		function ($scope, $http) {
-			$scope.areaList = [
-				'jayanagar',
-				'btm layout',
-				'kodichikknahalli',
-				'Vasanth Nagar'
-			];
+			$scope.areaList = [];
+
+			$http.get('/getareas').then(function (success) {
+				$scope.areaList = success.data.areas;
+			}, function () {
+				alert('something went wrong while fetching areas');
+			});
 
 			$scope.selectedArea = '';
 			$scope.mosqueList = [];
