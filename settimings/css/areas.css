@@ -19,6 +19,11 @@
 	margin-bottom: 10px;
 }
 
+.area-list {
+	overflow: scroll;
+    height: calc(100% - 180px);
+}
+
 .area button, .area-headings button {
 	padding: 5px;
 }
