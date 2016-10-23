@@ -17,9 +17,9 @@
 }
 
 .time-selector {
-    border-radius: 0px;
     height: 30px;
-    width: 110px;
+    width: 70px;
+    padding: 0 10px;
 }
 
 .save-timing {
